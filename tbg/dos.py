@@ -50,7 +50,25 @@ def _gaussian_broaden(
     weights: np.ndarray,
     eta: float,
 ) -> np.ndarray:
-    """Vectorised Gaussian convolution."""
+    """
+    Vectorised Gaussian convolution over eigenvalues.
+
+    Parameters
+    ----------
+    energies : ndarray, shape (M,)
+        Energy grid at which to evaluate the broadened spectrum.
+    eigenvalues : ndarray, shape (K,)
+        Eigenvalues to be broadened.
+    weights : ndarray, shape (K,)
+        Weight of each eigenvalue (e.g., 1/N for DOS, |ψ(i)|² for LDOS).
+    eta : float
+        Gaussian broadening width (eV).
+
+    Returns
+    -------
+    ndarray, shape (M,)
+        Broadened spectral function at each energy grid point.
+    """
     # energies: (M,), eigenvalues: (K,), weights: (K,)
     diff = energies[:, None] - eigenvalues[None, :]   # (M, K)
     gauss = np.exp(-0.5 * (diff / eta) ** 2) / (eta * np.sqrt(2.0 * np.pi))

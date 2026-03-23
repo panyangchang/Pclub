@@ -14,7 +14,11 @@ from tbg.dos import compute_dos, compute_ldos, integrated_dos
 
 @pytest.fixture(scope="module")
 def small_tbg():
-    """Small TBG system for fast tests."""
+    """
+    Small TBG system for fast tests: θ = 5°, n_cells = 2.
+    Produces 50 atoms per layer (100 total), sufficient for physics checks
+    while keeping test execution under 1 second.
+    """
     bot, top = generate_tbg_geometry(5.0, n_cells=2)
     H = build_hamiltonian([bot, top])
     return bot, top, H

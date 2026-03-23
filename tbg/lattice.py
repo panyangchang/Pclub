@@ -334,8 +334,9 @@ def commensurate_indices(m: int, n: int) -> Tuple[int, int]:
     n_atoms_per_layer : int
         Number of atoms per layer in the minimal supercell.
     """
-    cos_theta = (m**2 + 4 * m * n + n**2) / (2 * (m**2 + m * n + n**2))
+    m2_mn_n2 = m**2 + m * n + n**2
+    cos_theta = (m**2 + 4 * m * n + n**2) / (2 * m2_mn_n2)
     cos_theta = np.clip(cos_theta, -1.0, 1.0)
     theta_deg = np.degrees(np.arccos(cos_theta))
-    n_atoms = 4 * (m**2 + m * n + n**2)
+    n_atoms = 4 * m2_mn_n2
     return theta_deg, n_atoms
